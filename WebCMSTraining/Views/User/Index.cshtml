@@ -1,0 +1,89 @@
+﻿@using WebCMSTraining.Models.DB; 
+@model List<User>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+</head>
+<body>
+    <div class="col text-right">
+        <a href="@Url.Action("CreateUser", "User")" class="btn btn-primary mb-3">
+            Add User
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped" id="table1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var GetUserData in Model)
+                    {
+                        <tr>
+                            <td>@GetUserData.Name</td>
+                            <td>@GetUserData.Email</td>
+                            <td>@GetUserData.PhoneNumber</td>
+                            <td>@GetUserData.Address</td>
+                            <td>@GetUserData.Status</td>
+                            <td>
+                                <a href="@Url.Action("UpdateUser", "User", new { id = GetUserData.Id })" class="btn btn-sm btn-info">Update</a>
+                                <input type="button" class="btn btn-sm btn-danger" value="Delete" onclick="deleteData(@GetUserData.Id)" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form action="@Url.Action("DeleteUser", "User")" method="post" id="DeleteUser">
+                <input type="text" name="Id" id="CekDelete" style="display:none">
+            </form>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            function deleteData(Del) {
+                if (window.confirm("Delete This Data?")) {
+                    document.getElementById("CekDelete").value = Del;
+                    document.getElementById("DeleteUser").submit();
+                }
+            }
+        </script>
+    }
+
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/datatable/assets/vendors/simple-datatables/simple-datatables.js"></script>
+    <script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+
+    <script src="~/datatable/assets/js/main.js"></script>
+
+
+
+</body>
+</html>
+
+

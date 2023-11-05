@@ -1,0 +1,170 @@
+﻿@*@using WebCMSTraining.Models.DB;
+    @model List<Category>*@
+@{
+    Layout = "_AdminLayout";
+}
+
+@*<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="~/datatable/assets/vendors/simple-datatables/style.css">
+        <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+    </head>
+    <body>*@
+
+<div class="col text-right">
+    <a href="@Url.Action("CreateCategory", "Category")" class="btn btn-primary mb-3">
+        Add Category
+    </a>
+</div>
+@Html.AntiForgeryToken()
+<div class="row">
+    <div class="col-12">
+        <table id="tablecategory">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Category Name</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            @*@foreach (var CategoryGetData in Model)
+                {
+                    <tr>
+                        <td>@CategoryGetData.CategoryName</td>
+                        <td>@CategoryGetData.Status</td>
+                        <td>
+                            <a href="@Url.Action("UpdateCategory", "Category", new { id = CategoryGetData.Id })" class="btn btn-sm btn-info">Update</a>
+                            <input type="button" class="btn btn-sm btn-danger" value="Delete" onclick="deleteData(@CategoryGetData.Id)" />
+                        </td>
+                    </tr>
+                }*@
+        </table>
+        <form action="@Url.Action("DeleteCategory", "Category")" method="post" id="DeleteCate">
+            <input type="hidden" name="Id" id="CekDelete" style="display:none">
+        </form>
+    </div>
+</div>
+
+@*<script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/datatable/assets/vendors/simple-datatables/simple-datatables.js"></script>
+        <script>
+                    // Simple Datatable
+                    let table1 = document.querySelector('#table1');
+                    let dataTable = new simpleDatatables.DataTable(table1);
+                </script>
+
+                <script src="~/datatable/assets/js/main.js"></script>
+
+            </body>
+            </html>*@
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function ()
+        {
+            $("#tablecategory").DataTable({
+
+                processing: true, // for show progress bar
+                serverSide: true, // for process server side
+                filter: true, // this is for disable filter (search box)
+                orderMulti: false, // for disable multiple column at once
+                searching: true,
+
+                ajax: {
+                    url: "/Category/LoadDataCategory",
+                    type: "POST",
+                    dataType: "json",
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                },
+
+                columnDefs: [
+                        {
+                            "defaultContent" : "-",
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        }
+                 ],
+
+                columns: [
+                    {
+                        "data": "id",
+                        "name": "id",
+                        "autoWidth": true
+                    },
+                    {
+                        "data": "categoryName",
+                        "name": "categoryName",
+                        "autoWidth": true
+                    },
+                    {
+                        "data": "status",
+                        "name": "status",
+                        "autoWidth": true
+                    },
+                    {
+                        "render": function (data, type, full, meta) {
+                            return '<a class="btn btn-sm btn-primary" href="/Category/UpdateCategory?id=' + full.id + '"> Update </a>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return "<a href='#' class='btn btn-sm btn-danger' onclick=DeleteData('" + row.id + "'); > Delete </a>";
+                        }
+                    },
+                ]
+            });
+        });
+
+
+        function DeleteData(id)
+        {
+            if (confirm("Delete This Data?"))
+            {
+                Delete(id);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        function Delete(id)
+        {
+            var url = '@Url.Content("~/")' + "Category/DeleteCategory";
+
+            $.post(url, { ID: id }, function(data) {
+                if (data)
+                {
+                    oTable = $('#tablecategory').DataTable();
+                    oTable.draw();
+                }
+                else {
+                    alert("Something Went Wrong!");
+                }
+            });
+        }
+    </script>
+
+    @*<script>
+            function deleteData(Del) {
+                if (window.confirm("Delete This Data?")) {
+                    document.getElementById("CekDelete").value = Del;
+                    document.getElementById("DeleteCate").submit();
+                }
+            }
+        </script>*@
+}

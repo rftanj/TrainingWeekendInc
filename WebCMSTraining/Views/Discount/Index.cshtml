@@ -1,0 +1,86 @@
+﻿@using WebCMSTraining.Models.DB;
+@model List<Discount>
+
+@{ 
+    Layout = "_AdminLayout";
+}
+    
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+</head>
+    <body>
+        <div class="col text-right">
+            <a href="@Url.Action("CreateDiscount", "Discount")" class="btn btn-primary mb-3">
+                Add Discount
+            </a>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped" id="table1">
+                    <tr>
+                        <th>Discount Code</th>
+                        <th>Discount Name</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        <th>Start Period</th>
+                        <th>End Period</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    @foreach (var DiscountGetData in Model)
+                    {
+                        <tr>
+                            <td>@DiscountGetData.DiscountCode</td>
+                            <td>@DiscountGetData.DiscountName</td>
+                            <td>@DiscountGetData.DiscountType</td>
+                            <td>@DiscountGetData.DiscountValue</td>
+                            <td>@DiscountGetData.StartPeriod.ToString("dd/MM/yyyy")</td>
+                            <td>@DiscountGetData.EndPeriod.ToString("dd/MM/yyyy")</td>
+                            <td>@DiscountGetData.Status</td>
+                            <td>
+                                <a href="@Url.Action("UpdateDiscount", "Discount", new { id = DiscountGetData.Id })" class="btn btn-sm btn-info">Update</a>
+                                <input type="button" class="btn btn-sm btn-danger" value="Delete" onclick="deleteData(@DiscountGetData.Id)" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <form action="@Url.Action("DeleteDiscount", "Discount")" method="post" id="DeleteDiscount">
+                    <input type="text" name="Id" id="CekDelete" style="display:none">
+                </form>
+            </div>
+        </div>
+        <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="~/datatable/assets/vendors/simple-datatables/simple-datatables.js"></script>
+        
+        <script>
+            // Simple Datatable
+            let table1 = document.querySelector('#table1');
+            let dataTable = new simpleDatatables.DataTable(table1);
+        </script>
+
+        <script src="~/datatable/assets/js/main.js"></script>
+
+    </body>
+</html>
+
+@section Scripts{
+    <script>
+        function deleteData(Del) {
+
+            if (window.confirm("Delete This Data?")) {
+                document.getElementById("CekDelete").value = Del;
+                document.getElementById("DeleteDiscount").submit();
+            }
+        }
+    </script>
+}

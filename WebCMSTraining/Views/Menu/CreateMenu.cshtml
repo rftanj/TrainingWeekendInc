@@ -1,0 +1,97 @@
+﻿@using WebCMSTraining.Models.DTO;
+@model MenuDTO;
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+    <link rel="shortcut icon" href="~/datatable/assets/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+    <section id="">
+        <div class="row match-height">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <center><h4>Form Add Menu</h4></center>
+                    </div>
+                    <form asp-action="CreateMenu" method="POST" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <Select asp-items="@Model.CategoryName" asp-for="CategoryId" class="form-control"></Select>
+                                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Menu Name</label>
+                                        <input type="text" asp-for="MenuName" class="form-control" />
+                                        <span asp-validation-for="MenuName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Stock</label>
+                                        <input type="text" asp-for="Stock" class="form-control" />
+                                        <span asp-validation-for="Stock" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<MenuDTO.MenuStatus>()">
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Choose Picture</label>
+                                        <input type="file" asp-for="Picture" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit"
+                                            class="btn btn-primary me-1 mb-1">
+                                        Submit
+                                    </button>
+                                    <a href="@Url.Action("Index","Menu")"
+                                       class="btn btn-primary me-1 mb-1">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/datatable/assets/js/main.js"></script>
+</body>
+</html>
+

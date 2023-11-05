@@ -1,0 +1,87 @@
+﻿@using WebCMSTraining.Models.DB;
+@model List<Menu>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+</head>
+<body>
+    <div class="col text-right">
+        <a href="@Url.Action("CreateMenu", "Menu")" class="btn btn-primary mb-3">
+            Add Menu
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped" id="table1">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Picture</th>
+                        <th>Menu Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var MenuGetData in Model)
+                    {
+                        <tr>
+                            <td>@MenuGetData.CategoryName</td>
+                            <td><img src="@Html.Raw($"/uploads/img/{MenuGetData.Picture}")" width="80"/></td>
+                            <td>@MenuGetData.MenuName</td>
+                            <td>Rp. @MenuGetData.Price</td>
+                            <td>@MenuGetData.Stock</td>
+                            <td>@MenuGetData.Status</td>
+                            <td>
+                                <a href="@Url.Action("UpdateMenu", "Menu", new { id = MenuGetData.Id })" class="btn btn-sm btn-info">Update</a>
+                                <input type="button" class="btn btn-sm btn-danger" value="Delete" onclick="deleteData(@MenuGetData.Id)" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <form action="@Url.Action("DeleteMenu", "Menu")" method="post" id="DeleteMenu">
+                <input type="text" name="Id" id="CekDelete" style="display:none">
+            </form>
+        </div>
+    </div>
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/datatable/assets/vendors/simple-datatables/simple-datatables.js"></script>
+    <script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table1');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+
+    <script src="~/datatable/assets/js/main.js"></script>
+
+</body>
+</html>
+
+@section Scripts{
+    <script>
+        function deleteData(Del) {
+
+            if (window.confirm("Delete This Data?")) {
+                document.getElementById("CekDelete").value = Del;
+                document.getElementById("DeleteMenu").submit();
+            }
+        }
+    </script>
+}

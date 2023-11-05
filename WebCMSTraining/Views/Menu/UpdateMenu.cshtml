@@ -1,0 +1,79 @@
+﻿@using WebCMSTraining.Models.DTO;
+@model MenuDTO;
+
+
+<div class="mb-3">
+    <center><h2>Update Menu</h2></center>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="UpdateMenu" method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Category Name</label>
+                <Select asp-items="@Model.CategoryName" asp-for="CategoryId" class="form-control"></Select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Menu Name</label>
+                <input type="text" asp-for="MenuName" class="form-control" />
+                <span asp-validation-for="MenuName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="text" asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Stock</label>
+                <input type="text" asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Choose Picture</label><br />
+                <img src="@Html.Raw($"/uploads/img/{Model.Picture}")" width="100" class="img-preview mb-3" />
+                <input type="file" asp-for="Picture" class="form-control" onchange="getPreview()" />
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select asp-for="Status" class="form-control">
+                    @if (Model.Status.ToString() == "Published")
+                    {
+                        <option value="Published" selected>Published</option>
+                        <option value="Deleted">Deleted</option>
+                    }
+                    else
+                    {
+                        <option value="Published">Published</option>
+                        <option value="Deleted" selected>Deleted</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save Update Data</button>
+                <a href="@Url.Action("Index","Menu")" class="btn btn-info">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function getPreview()
+        {
+            const pictMenu = document.querySelector('#Picture');
+            const imgPreview = document.querySelector('.img-preview');
+            const getFoto = new FileReader();
+            getFoto.readAsDataURL(pictMenu.files[0]);
+
+            getFoto.onload = function(e) {
+                imgPreview.src = e.target.result;
+            }
+        }
+    </script>
+}
+

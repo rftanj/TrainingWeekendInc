@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin Dashboard</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+    <link rel="shortcut icon" href="~/datatable/assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="/Home/Index"><img src="~/datatable/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/category/index" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Category</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/Discount/index" class='sidebar-link'>
+                                <i class="bi bi-egg-fill"></i>
+                                <span>Discount</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/Menu/index" class='sidebar-link'>
+                                <i class="bi bi-menu-app-fill"></i>
+                                <span>Menu</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/Order/index" class='sidebar-link'>
+                                <i class="bi bi-calendar3-week"></i>
+                                <span>Order</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/User/index" class='sidebar-link'>
+                                <i class="bi bi-people-fill"></i>
+                                <span>User</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="/Driver/index" class='sidebar-link'>
+                                <i class="bi bi-people-fill"></i>
+                                <span>Driver</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item  ">
+                            <a class='sidebar-link' style="cursor:pointer" onclick="function Logout() { document.getElementById('idformLogout').submit(); } Logout();">
+                                <i class="bi bi-arrow-bar-left"></i>
+                                <span>Logout</span>
+                            </a>
+                            <form action="/Autentikasi/Logout" method="post" id="idformLogout"></form>
+                        </li>
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-heading">
+                <h3></h3>
+            </div>
+            <div class="page-content">
+                <section class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>
+                            Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a href="http://ahmadsaugi.com">A. Saugi</a>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    @*<script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>*@
+    <script src="~/datatable/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="~/datatable/assets/js/pages/dashboard.js"></script>
+    <script src="~/datatable/assets/js/main.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*Import Data Data Table*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

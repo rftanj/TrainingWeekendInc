@@ -1,0 +1,66 @@
+﻿@using WebCMSTraining.Models.DB;
+@model Discount;
+
+@{ 
+    Layout = "_AdminLayout";
+}
+
+
+<div class="mb-3">
+    <center><h2>Update Discount</h2></center>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="UpdateDiscount" method="POST">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Discount Code</label>
+                <input type="text" asp-for="DiscountCode" class="form-control" />
+                <span asp-validation-for="DiscountCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Discount Name</label>
+                <input type="text" asp-for="DiscountName" class="form-control" />
+                <span asp-validation-for="DiscountName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select asp-for="DiscountType" class="form-control">
+                    <option value="Persen">Persen</option>
+                    <option value="Nominal">Nominal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Category Value</label>
+                <input type="text" asp-for="DiscountValue" class="form-control" />
+                <span asp-validation-for="DiscountValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Start Period</label>
+                <input type="date" asp-for="StartPeriod" class="form-control" />
+                <span asp-validation-for="StartPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>End Period</label>
+                <input type="date" asp-for="EndPeriod" class="form-control" />
+                <span asp-validation-for="EndPeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Published">Published</option>
+                    <option value="Unpublished">Unpublished</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save Data</button>
+                <a href="@Url.Action("Index","Discount")" class="btn btn-info">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

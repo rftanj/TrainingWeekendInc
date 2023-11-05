@@ -1,0 +1,105 @@
+﻿@using WebCMSTraining.Models.DTO;
+@model DiscountDTO;
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+    <link rel="shortcut icon" href="~/datatable/assets/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+    <section id="">
+        <div class="row match-height">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <center><h4>Form Add Discount</h4></center>
+                    </div>
+                    <form asp-action="CreateDiscount" method="POST">
+                        @Html.AntiForgeryToken();
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Discount Code</label>
+                                        <input type="text" asp-for="DiscountCode" class="form-control" />
+                                        <span asp-validation-for="DiscountCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Discount Name</label>
+                                        <input type="text" asp-for="DiscountName" class="form-control" />
+                                        <span asp-validation-for="DiscountName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Discount Type</label>
+                                        <select asp-for="DiscountType" class="form-control">
+                                            <option value="Persen">Persen</option>
+                                            <option value="Nominal">Nominal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Category Value</label>
+                                        <input type="text" asp-for="DiscountValue" class="form-control" />
+                                        <span asp-validation-for="DiscountValue" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Start Period</label>
+                                        <input type="date" asp-for="StartPeriod" class="form-control" />
+                                        <span asp-validation-for="StartPeriod" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>End Period</label>
+                                        <input type="date" asp-for="EndPeriod" class="form-control" />
+                                        <span asp-validation-for="EndPeriod" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<DiscountDTO.DiscountStat>()">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit"
+                                            class="btn btn-primary me-1 mb-1">
+                                        Save Data
+                                    </button>
+                                    <a href="@Url.Action("Index","Discount")"
+                                       class="btn btn-primary me-1 mb-1">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </section>
+
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/datatable/assets/js/main.js"></script>
+</body>
+</html>
+

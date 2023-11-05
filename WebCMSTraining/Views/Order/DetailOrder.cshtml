@@ -1,0 +1,149 @@
+﻿@using WebCMSTraining.Models.DTO;
+@model DetailOrderDTO
+@{
+    //Layout = "_AdminLayout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/datatable/assets/vendors/simple-datatables/style.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/datatable/assets/css/app.css">
+</head>
+
+<div class="col text-right">
+    <a href="@Url.Action("Index", "Order")" class="btn btn-sm btn-primary mb-3">
+        Go Back
+    </a>
+</div>
+
+<body>
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Order Info</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8 text-left" >
+                                <label>Transaction Id  : </label> @Model.order.Id <br />
+                                <label>User Name : </label> @Model.order.UserName <br />
+                                <label>Discount Code : </label> @Model.order.DiscountCode <br />
+                                <label>Transaction Date : </label>@Model.order.TransactionDate.ToString("dd/MM/yyyy") <br />
+                            </div>
+                            <div class="col-4 text-right">
+                                <label>Total : Rp. </label> @Model.order.TotalPrice <br />
+                                <label>Discount : Rp. </label>@Model.order.Total <br />
+                                <label>Total Payment : Rp. </label> @Html.Raw($"{Model.order.TotalPrice - Model.order.Total}")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Detail Order</h4>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped" id="table2">
+                        <thead>
+                            <tr>
+                                <th>Menu</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        @foreach (var detailOrder in Model.detailOrder)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@detailOrder.MenuName</td>
+                                    <td>@detailOrder.Price</td>
+                                    <td>@detailOrder.Quantity</td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Order Tracking</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.order.OrderStatus.ToString() == "Delivered")
+                        {
+                            <p>
+                                Status Order : @Model.order.OrderStatus <br />
+                                Pengirim : @Model.order.Driver
+                            </p>
+                        }
+                        else if (Model.order.OrderStatus.ToString() == "Process")
+                        {
+                            <form method="post" asp-action="SetDriver">
+                                @Html.AntiForgeryToken()
+                                <p>
+                                    Status Order : @Model.order.OrderStatus <br />
+                                </p>
+                                <p>
+                                    Choose Driver : <br />
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="@Model.order.Id" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.DropDownListFor(x => x.order.Driver, new SelectList(ViewBag.SelectListDriver, "Value", "Text"),
+                                            new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-primary me-1 mb-1">
+                                                Set Driver
+                                            </button>
+                                        </div>
+                                    </div>
+                                </p>
+                            </form>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/datatable/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/datatable/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/datatable/assets/vendors/simple-datatables/simple-datatables.js"></script>
+    <script>
+        // Simple Datatable
+        let table1 = document.querySelector('#table2');
+        let dataTable = new simpleDatatables.DataTable(table1);
+    </script>
+
+    <script src="~/datatable/assets/js/main.js"></script>
+   
+</body>
+
+</html>
